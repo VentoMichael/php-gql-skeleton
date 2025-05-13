@@ -2,9 +2,11 @@
 
 namespace Vertuoza\Repositories\Settings\UnitTypes;
 
+use Exception;
 use Overblog\DataLoader\DataLoader;
 use Overblog\PromiseAdapter\PromiseAdapterInterface;
-use React\Promise\Promise;
+use React\Promise\PromiseInterface;
+use Vertuoza\Entities\Settings\UnitTypeEntity;
 use Vertuoza\Repositories\Database\QueryBuilder;
 use Vertuoza\Repositories\Settings\UnitTypes\Models\UnitTypeMapper;
 use Vertuoza\Repositories\Settings\UnitTypes\Models\UnitTypeModel;
@@ -69,12 +71,13 @@ class UnitTypeRepository
     return $this->db->getConnection()->table(UnitTypeModel::getTableName());
   }
 
-  public function getByIds(array $ids, string $tenantId): Promise
+  public function getByIds(array $ids, string $tenantId): PromiseInterface
   {
     return $this->getDataloader($tenantId)->loadMany($ids);
   }
 
-  public function getById(string $id, string $tenantId): Promise
+  /** @return PromiseInterface<UnitTypeEntity|null> */
+  public function getById(string $id, string $tenantId): PromiseInterface
   {
     return $this->getDataloader($tenantId)->load($id);
   }
@@ -112,12 +115,14 @@ class UnitTypeRepository
     )();
   }
 
-  public function create(UnitTypeMutationData $data, string $tenantId): int|string
+  /** @throws Exception */
+  public function create(UnitTypeMutationData $data, string $tenantId): string
   {
-    $newId = $this->getQueryBuilder()->insertGetId(
-      UnitTypeMapper::serializeCreate($data, $tenantId)
+    $id = uniqid('', true);
+    $this->getQueryBuilder()->insert(
+      ['id' => $id] + UnitTypeMapper::serializeCreate($data, $tenantId)
     );
-    return $newId;
+    return $id;
   }
 
   public function update(string $id, UnitTypeMutationData $data)

@@ -16,11 +16,15 @@ class UnitType extends ObjectType
       'fields' => static fn (): array => [
         'id' => [
           'description' => "Unique identifier of the unit type",
-          'type' => Types::id(),
+          'type' => Types::nonNull(Types::id()),
         ],
-        'name' => [
-          'description' => "Name of the unit type",
-          'type' => Types::string()
+        'tenantId' => [
+          'description' => "Tenant identifier of the unit type",
+          'type' => Types::string(),
+        ],
+        'label' => [
+          'description' => "Label of the unit type",
+          'type' => Types::nonNull(Types::string())
         ],
         'isSystem' => [
           'description' => "To know if the unit type has been created by the user or is a system unit type of Vertuoza",
