@@ -33,6 +33,6 @@ class UnitTypeModel
 
   public static function getTableName(): string
   {
-    return 'unit_type';
+    return 'unit_types';
   }
 }

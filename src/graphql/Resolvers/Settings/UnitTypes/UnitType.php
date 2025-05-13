@@ -24,7 +24,7 @@ class UnitType extends ObjectType
         ],
         'isSystem' => [
           'description' => "To know if the unit type has been created by the user or is a system unit type of Vertuoza",
-          'type' => new NonNull(Types::boolean())
+          'type' => Types::nonNull(Types::boolean())
         ],
       ],
     ]);
