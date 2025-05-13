@@ -5,6 +5,7 @@ namespace Vertuoza\Api\Graphql;
 use GraphQL\Type\Definition\PhpEnumType;
 use GraphQL\Type\Definition\ScalarType;
 use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\NonNull;
 
 final class Types
 {
@@ -117,5 +118,10 @@ final class Types
   public static function string(): ScalarType
   {
     return Type::string();
+  }
+
+  public static function nonNull($type): Type
+  {
+    return new NonNull($type);
   }
 }
