@@ -20,3 +20,4 @@ docker-compose up
 ```
 
 This will create the database and feed it with sample data. You can open Apollo studion to test the api on http://localhost:3003/
+# Vertuoza-gql
